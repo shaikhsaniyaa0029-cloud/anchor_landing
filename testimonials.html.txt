@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Anchor — Testimonials</title>
+  <meta name="description" content="See what independent tradespeople say about Anchor.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #1B2430;
+      --steel: #EDEAE3;
+      --chalk: #FAF9F6;
+      --slate: #5B6472;
+      --line: #C9C3B6;
+      --orange: #E8622C;
+      --rust: #A63D22;
+
+      --display: 'Fraunces', serif;
+      --body: 'IBM Plex Sans', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+
+      --maxw: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--steel);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+    }
+
+    h1, h2 {
+      font-family: var(--display);
+      font-weight: 500;
+      line-height: 1.08;
+      margin: 0;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: auto;
+      padding: 0 28px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(237,234,227,0.94);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      text-decoration: none;
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav a:hover {
+      border-color: var(--ink);
+    }
+
+    .nav-cta,
+    .btn-primary {
+      background: var(--orange);
+      color: var(--chalk);
+      text-decoration: none;
+      padding: 12px 20px;
+      display: inline-block;
+      border-radius: 2px;
+      font-weight: 500;
+    }
+
+    .nav-cta:hover,
+    .btn-primary:hover {
+      background: var(--rust);
+    }
+
+    .menu-btn {
+      display: none;
+      width: 42px;
+      height: 42px;
+      background: none;
+      border: 1px solid var(--ink);
+      cursor: pointer;
+    }
+
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      position: relative;
+      margin: auto;
+    }
+
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+
+    .menu-btn span::before {
+      top: -6px;
+    }
+
+    .menu-btn span::after {
+      top: 6px;
+    }
+
+    .hero {
+      padding: 100px 0 75px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--slate);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      max-width: 14ch;
+    }
+
+    .hero p {
+      color: var(--slate);
+      max-width: 50ch;
+      font-size: 1.08rem;
+      margin-top: 25px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .testimonial {
+      background: var(--chalk);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 34px 28px;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ref {
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      color: var(--slate);
+    }
+
+    blockquote {
+      margin: 30px 0;
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.4;
+    }
+
+    .person {
+      margin-top: auto;
+      border-top: 1px dashed var(--line);
+      padding-top: 16px;
+      color: var(--slate);
+      font-size: 0.9rem;
+    }
+
+    .person strong {
+      display: block;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .cta {
+      background: var(--ink);
+      color: var(--chalk);
+    }
+
+    .cta h2 {
+      color: var(--chalk);
+      font-size: 2.2rem;
+    }
+
+    .cta p {
+      color: #D7D4CE;
+      max-width: 48ch;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 40px 0;
+    }
+
+    footer p {
+      color: var(--slate);
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      nav {
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--chalk);
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 28px 18px;
+        display: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      nav a {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<header>
+  <div class="wrap nav-inner">
+
+```
+<a href="index.html" class="brand">⚓ Anchor</a>
+
+<nav id="nav-links">
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="testimonials.html">Testimonials</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<a href="contact.html" class="nav-cta">Start free trial</a>
+
+<button class="menu-btn" id="menu-btn" aria-label="Open menu">
+  <span></span>
+</button>
+```
+
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+
+```
+  <p class="eyebrow">TESTIMONIALS / 02</p>
+
+  <h1>What it replaced.</h1>
+
+  <p>
+    Three trades, three different piles of paperwork, and three reasons
+    to spend less time managing the books.
+  </p>
+
+</div>
+```
+
+  </section>
+
+  <section>
+    <div class="wrap">
+
+```
+  <div class="testimonial-grid">
+
+    <article class="testimonial">
+
+      <span class="ref">Ref. 0117</span>
+
+      <blockquote>
+        "I used to invoice in batches on Sunday night. Now it's done
+        before I've left the driveway of the last job."
+      </blockquote>
+
+      <div class="person">
+        <strong>Dana Okafor</strong>
+        Electrician, 9 years
+      </div>
+
+    </article>
+
+    <article class="testimonial">
+
+      <span class="ref">Ref. 0118</span>
+
+      <blockquote>
+        "The job costing is the part I didn't know I needed. Turns out
+        my easy jobs were the ones losing money."
+      </blockquote>
+
+      <div class="person">
+        <strong>Marcus Webb</strong>
+        HVAC technician
+      </div>
+
+    </article>
+
+    <article class="testimonial">
+
+      <span class="ref">Ref. 0119</span>
+
+      <blockquote>
+        "My accountant asked what changed. I told her I stopped guessing
+        at mileage, and she believed me immediately."
+      </blockquote>
+
+      <div class="person">
+        <strong>Priya Nair</strong>
+        Plumbing contractor
+      </div>
+
+    </article>
+
+  </div>
+
+</div>
+```
+
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+
+```
+  <h2>Ready to simplify your paperwork?</h2>
+
+  <p>
+    Tell us about your current setup and we'll help you get started.
+  </p>
+
+  <a href="contact.html" class="btn-primary">
+    Contact Anchor
+  </a>
+
+</div>
+```
+
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; 2026 Anchor Books, Inc. Built for people who'd rather be on the job.</p>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const navLinks = document.getElementById('nav-links');
+
+  menuBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
+

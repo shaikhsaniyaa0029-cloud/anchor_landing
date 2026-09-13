@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchor — Bookkeeping for people who work with their hands</title>
+<meta name="description" content="Anchor tracks invoices, expenses, and job costs for independent tradespeople, so the paperwork stops eating your evenings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  /* ---------- Tokens ---------- */
+  :root{
+    --ink:      #1B2430;   /* primary text / dark surfaces */
+    --steel:    #EDEAE3;   /* page background */
+    --chalk:    #FAF9F6;   /* card / panel background */
+    --slate:    #5B6472;   /* secondary text */
+    --line:     #C9C3B6;   /* rule lines / borders */
+    --orange:   #E8622C;   /* accent — stamps, CTAs only */
+    --rust:     #A63D22;   /* accent hover/active */
+    --ok:       #2F6B4F;
+
+    --display: 'Fraunces', serif;
+    --body:    'IBM Plex Sans', sans-serif;
+    --mono:    'IBM Plex Mono', monospace;
+
+    --maxw: 1120px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--steel);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:var(--display);
+    font-weight:500;
+    line-height:1.08;
+    margin:0;
+    color:var(--ink);
+  }
+
+  a{ color:inherit; }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--orange);
+    outline-offset:3px;
+  }
+
+  /* ---------- Navbar ---------- */
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(237,234,227,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:72px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--display);
+    font-size:1.3rem;
+    font-weight:600;
+    text-decoration:none;
+    color:var(--ink);
+  }
+  .brand svg{ flex:none; }
+
+  nav.links{
+    display:flex;
+    gap:32px;
+    list-style:none;
+    margin:0; padding:0;
+  }
+  nav.links a{
+    text-decoration:none;
+    font-size:0.96rem;
+    color:var(--ink);
+    padding:6px 0;
+    border-bottom:1px solid transparent;
+    transition:border-color .15s ease;
+  }
+  nav.links a:hover{ border-color:var(--ink); }
+
+  .nav-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--ink);
+    color:var(--chalk);
+    text-decoration:none;
+    padding:10px 18px;
+    font-size:0.92rem;
+    font-weight:500;
+    border-radius:2px;
+    transition:background .15s ease;
+  }
+  .nav-cta:hover{ background:var(--rust); }
+
+  .menu-btn{
+    display:none;
+    background:none; border:1px solid var(--ink);
+    width:42px; height:42px; border-radius:2px;
+    align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .menu-btn span, .menu-btn span::before, .menu-btn span::after{
+    content:''; display:block; width:18px; height:2px; background:var(--ink);
+    position:relative; transition:transform .2s ease, opacity .2s ease;
+  }
+  .menu-btn span::before{ position:absolute; top:-6px; }
+  .menu-btn span::after{ position:absolute; top:6px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:96px 0 88px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1.05fr 0.85fr;
+    gap:64px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:0.82rem;
+    color:var(--slate);
+    margin:0 0 18px;
+  }
+  .hero h1{
+    font-size:clamp(2.3rem, 4.2vw, 3.4rem);
+    max-width:14ch;
+    letter-spacing:-0.01em;
+  }
+  .hero-sub{
+    margin:26px 0 0;
+    max-width:46ch;
+    font-size:1.08rem;
+    color:var(--slate);
+  }
+  .hero-actions{
+    margin-top:34px;
+    display:flex;
+    align-items:center;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--orange);
+    color:var(--chalk);
+    text-decoration:none;
+    padding:14px 24px;
+    font-weight:500;
+    font-size:0.98rem;
+    border:none;
+    border-radius:2px;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+  }
+  .btn-primary:hover{ background:var(--rust); }
+  .btn-primary:active{ transform:translateY(1px); }
+
+  .link-quiet{
+    text-decoration:none;
+    font-size:0.95rem;
+    border-bottom:1px solid var(--slate);
+    color:var(--ink);
+    padding-bottom:2px;
+  }
+
+  .hero-note{
+    margin-top:20px;
+    font-family:var(--mono);
+    font-size:0.78rem;
+    color:var(--slate);
+  }
+
+  /* job ticket graphic */
+  .ticket{
+    background:var(--chalk);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:26px 26px 22px;
+    position:relative;
+    box-shadow:6px 6px 0 rgba(27,36,48,0.06);
+  }
+  .ticket::before, .ticket::after{
+    content:''; position:absolute; width:18px; height:18px;
+    background:var(--steel); border:1px solid var(--line); border-radius:50%;
+    top:50%; transform:translateY(-50%);
+  }
+  .ticket::before{ left:-10px; }
+  .ticket::after{ right:-10px; }
+  .ticket-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:1px dashed var(--line);
+    padding-bottom:14px; margin-bottom:14px;
+  }
+  .ticket-head .no{ font-family:var(--mono); font-size:0.8rem; color:var(--slate); }
+  .stamp{
+    font-family:var(--mono);
+    font-size:0.72rem;
+    letter-spacing:0.06em;
+    color:var(--orange);
+    border:1.5px solid var(--orange);
+    padding:3px 9px;
+    border-radius:2px;
+    transform:rotate(-4deg);
+    display:inline-block;
+  }
+  .ticket-row{
+    display:flex; justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+    font-size:0.92rem;
+  }
+  .ticket-row:last-of-type{ border-bottom:none; }
+  .ticket-row span:last-child{ font-family:var(--mono); color:var(--ink); }
+  .ticket-total{
+    display:flex; justify-content:space-between;
+    margin-top:14px; padding-top:14px;
+    border-top:1px solid var(--ink);
+    font-family:var(--mono);
+    font-weight:500;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{ padding:88px 0; }
+  .section-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:end;
+    margin-bottom:52px;
+    padding-bottom:26px;
+    border-bottom:1px solid var(--line);
+  }
+  .section-head h2{ font-size:clamp(1.8rem, 3vw, 2.3rem); max-width:16ch; }
+  .section-head p{ color:var(--slate); font-size:1.02rem; max-width:42ch; margin:0; }
+
+  /* ---------- Features (job list, not cards) ---------- */
+  .job-list{
+    display:flex; flex-direction:column;
+  }
+  .job-row{
+    display:grid;
+    grid-template-columns:64px 1.1fr 1.4fr;
+    gap:28px;
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .job-row:first-child{ padding-top:0; }
+  .job-row .tag{
+    font-family:var(--mono);
+    font-size:0.82rem;
+    color:var(--slate);
+    padding-top:4px;
+  }
+  .job-row h3{
+    font-size:1.28rem;
+    font-weight:500;
+  }
+  .job-row p{
+    margin:0;
+    color:var(--slate);
+    max-width:52ch;
+  }
+
+  /* ---------- Testimonials (invoice stack) ---------- */
+  .invoice-stack{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+    border-left:1px solid var(--line);
+  }
+  .invoice{
+    background:var(--chalk);
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:30px 26px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .invoice .ino{
+    font-family:var(--mono);
+    font-size:0.76rem;
+    color:var(--slate);
+  }
+  .invoice blockquote{
+    margin:0;
+    font-family:var(--display);
+    font-style:italic;
+    font-size:1.12rem;
+    line-height:1.4;
+  }
+  .invoice .who{
+    margin-top:auto;
+    padding-top:14px;
+    border-top:1px dashed var(--line);
+    font-size:0.88rem;
+    color:var(--slate);
+  }
+  .invoice .who strong{ display:block; color:var(--ink); font-weight:500; }
+
+  /* ---------- Contact ---------- */
+  .contact-wrap{
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    gap:64px;
+  }
+  .contact-copy h2{ font-size:clamp(1.8rem,3vw,2.3rem); max-width:14ch; }
+  .contact-copy p{ color:var(--slate); margin-top:18px; max-width:36ch; }
+  .contact-list{
+    margin-top:32px;
+    list-style:none;
+    padding:0;
+    font-family:var(--mono);
+    font-size:0.88rem;
+    color:var(--slate);
+    display:flex; flex-direction:column; gap:8px;
+  }
+
+  form#contact-form{
+    background:var(--chalk);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:36px;
+  }
+  .field{
+    margin-bottom:22px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .field label{
+    font-size:0.86rem;
+    font-weight:500;
+  }
+  .field input,
+  .field textarea{
+    font-family:var(--body);
+    font-size:0.98rem;
+    padding:12px 14px;
+    background:var(--steel);
+    border:1px solid var(--line);
+    border-radius:2px;
+    color:var(--ink);
+    resize:vertical;
+  }
+  .field input:focus,
+  .field textarea:focus{
+    outline:none;
+    border-color:var(--ink);
+  }
+  .field.has-error input,
+  .field.has-error textarea{
+    border-color:var(--rust);
+  }
+  .error-msg{
+    font-size:0.8rem;
+    color:var(--rust);
+    min-height:1em;
+    display:none;
+  }
+  .field.has-error .error-msg{ display:block; }
+
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+
+  .form-status{
+    margin-top:4px;
+    font-size:0.92rem;
+    display:none;
+  }
+  .form-status.show{ display:block; }
+  .form-status.success{ color:var(--ok); }
+  .form-status.fail{ color:var(--rust); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:44px 0;
+  }
+  .footer-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .footer-inner .brand{ font-size:1.05rem; }
+  footer p{ margin:0; font-size:0.86rem; color:var(--slate); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 880px){
+    .hero-inner{ grid-template-columns:1fr; }
+    .ticket{ max-width:420px; }
+    .section-head{ grid-template-columns:1fr; }
+    .invoice-stack{ grid-template-columns:1fr; }
+    .contact-wrap{ grid-template-columns:1fr; }
+    .job-row{ grid-template-columns:56px 1fr; }
+    .job-row p{ grid-column:2 / -1; }
+  }
+
+  @media (max-width: 720px){
+    nav.links{
+      position:absolute;
+      top:72px; left:0; right:0;
+      background:var(--chalk);
+      border-bottom:1px solid var(--line);
+      flex-direction:column;
+      gap:0;
+      padding:8px 28px 18px;
+      display:none;
+    }
+    nav.links.open{ display:flex; }
+    nav.links a{ padding:14px 0; border-bottom:1px solid var(--line); width:100%; }
+    .menu-btn{ display:flex; }
+    .nav-cta{ display:none; }
+    .hero{ padding:56px 0 60px; }
+    section{ padding:60px 0; }
+    .form-row{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand" aria-label="Anchor home">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="13" cy="7" r="3.4" stroke="#1B2430" stroke-width="1.6"/>
+        <path d="M13 10.4V21" stroke="#1B2430" stroke-width="1.6"/>
+        <path d="M6 15.5C6 15.5 7.5 21 13 21C18.5 21 20 15.5 20 15.5" stroke="#1B2430" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      Anchor
+    </a>
+
+    <nav class="links" id="nav-links">
+      <a href="#features">Features</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <a href="#contact" class="nav-cta">Start free trial</a>
+
+    <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div>
+        <p class="eyebrow">bookkeeping for people who work with their hands</p>
+        <h1>Send the invoice from the truck. Sort the rest later.</h1>
+        <p class="hero-sub">Anchor turns a day of job photos, receipts, and mileage into invoices, expense records, and a running total of what each job actually made you — without an evening at the kitchen table.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">Start free trial</a>
+          <a href="#features" class="link-quiet">See what it tracks</a>
+        </div>
+        <p class="hero-note">No card required · set up in one sitting · works from your phone</p>
+      </div>
+
+      <div class="ticket" role="img" aria-label="Sample job ticket showing a completed water heater install, invoiced and paid">
+        <div class="ticket-head">
+          <div>
+            <div style="font-family:var(--display); font-size:1.05rem;">Job Ticket</div>
+            <div class="no">No. 0482 — Sept 9</div>
+          </div>
+          <span class="stamp">PAID</span>
+        </div>
+        <div class="ticket-row"><span>Client</span><span>R. Alvarez</span></div>
+        <div class="ticket-row"><span>Job</span><span>Water heater install</span></div>
+        <div class="ticket-row"><span>Labor (3.5 hrs)</span><span>$262.50</span></div>
+        <div class="ticket-row"><span>Parts</span><span>$318.00</span></div>
+        <div class="ticket-row"><span>Mileage (14 mi)</span><span>$9.10</span></div>
+        <div class="ticket-total"><span>Total</span><span>$589.60</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Everything that used to live in a shoebox</h2>
+        <p>Five things Anchor keeps straight so you don't have to reconstruct them from memory in April.</p>
+      </div>
+
+      <div class="job-list">
+        <div class="job-row">
+          <span class="tag">01</span>
+          <h3>Invoicing</h3>
+          <p>Build an invoice on site from a job template, send it by text or email, and get notified the moment it's opened — or ignored.</p>
+        </div>
+        <div class="job-row">
+          <span class="tag">02</span>
+          <h3>Expense capture</h3>
+          <p>Photograph a receipt at the supply counter. Anchor reads the vendor, amount, and category, and files it against the right job.</p>
+        </div>
+        <div class="job-row">
+          <span class="tag">03</span>
+          <h3>Job costing</h3>
+          <p>See labor, parts, and mileage against what you billed, per job, so you know which kinds of work are actually worth taking.</p>
+        </div>
+        <div class="job-row">
+          <span class="tag">04</span>
+          <h3>Mileage log</h3>
+          <p>Runs quietly in the background between job sites and totals the deduction automatically — no notepad on the dash.</p>
+        </div>
+        <div class="job-row">
+          <span class="tag">05</span>
+          <h3>Tax set-aside</h3>
+          <p>A running estimate of what to hold back from each payment, based on your actual margin, updated as jobs close.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What it replaced</h2>
+        <p>Three trades, three different piles of paper, before Anchor.</p>
+      </div>
+
+      <div class="invoice-stack">
+        <div class="invoice">
+          <span class="ino">Ref. 0117</span>
+          <blockquote>I used to invoice in batches on Sunday night. Now it's done before I've left the driveway of the last job.</blockquote>
+          <div class="who"><strong>Dana Okafor</strong>Electrician, 9 years</div>
+        </div>
+        <div class="invoice">
+          <span class="ino">Ref. 0118</span>
+          <blockquote>The job costing is the part I didn't know I needed. Turns out my "easy" jobs were the ones losing money.</blockquote>
+          <div class="who"><strong>Marcus Webb</strong>HVAC technician</div>
+        </div>
+        <div class="invoice">
+          <span class="ino">Ref. 0119</span>
+          <blockquote>My accountant asked what changed. I told her I stopped guessing at mileage, and she believed me immediately.</blockquote>
+          <div class="who"><strong>Priya Nair</strong>Plumbing contractor</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap contact-wrap">
+      <div class="contact-copy">
+        <h2>Set it up in one sitting</h2>
+        <p>Tell us a bit about your trade and how you invoice today. We'll set up your first job templates with you — usually a 20-minute call.</p>
+        <ul class="contact-list">
+          <li>hello@anchorbooks.example</li>
+          <li>Mon–Fri, 8am–6pm</li>
+          <li>Response within one business day</li>
+        </ul>
+      </div>
+
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="field" data-field="name">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name">
+            <span class="error-msg">Enter your name.</span>
+          </div>
+          <div class="field" data-field="trade">
+            <label for="trade">Trade</label>
+            <input type="text" id="trade" name="trade" placeholder="Electrician, plumber, HVAC…" autocomplete="off">
+            <span class="error-msg">Let us know your trade.</span>
+          </div>
+        </div>
+
+        <div class="field" data-field="email">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email">
+          <span class="error-msg">Enter a valid email address.</span>
+        </div>
+
+        <div class="field" data-field="phone">
+          <label for="phone">Phone <span style="color:var(--slate); font-weight:400;">(optional)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 555-5555">
+          <span class="error-msg">Enter a valid phone number, or leave this blank.</span>
+        </div>
+
+        <div class="field" data-field="message">
+          <label for="message">How do you invoice today?</label>
+          <textarea id="message" name="message" rows="4"></textarea>
+          <span class="error-msg">Tell us a little about your current setup.</span>
+        </div>
+
+        <button type="submit" class="btn-primary">Request setup call</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span class="brand" style="font-size:1.05rem;">Anchor</span>
+    <p>&copy; 2026 Anchor Books, Inc. Built for people who'd rather be on the job.</p>
+  </div>
+</footer>
+
+<script>
+  // ---------- Mobile menu ----------
+  const menuBtn = document.getElementById('menu-btn');
+  const navLinks = document.getElementById('nav-links');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ---------- Contact form validation ----------
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+
+  const validators = {
+    name: v => v.trim().length >= 2,
+    trade: v => v.trim().length >= 2,
+    email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+    phone: v => v.trim() === '' || /^[0-9+()\-.\s]{7,}$/.test(v.trim()),
+    message: v => v.trim().length >= 10,
+  };
+
+  function setFieldError(fieldEl, hasError){
+    fieldEl.classList.toggle('has-error', hasError);
+  }
+
+  function validateField(name){
+    const fieldEl = form.querySelector(`[data-field="${name}"]`);
+    const input = fieldEl.querySelector('input, textarea');
+    const valid = validators[name](input.value);
+    setFieldError(fieldEl, !valid);
+    return valid;
+  }
+
+  Object.keys(validators).forEach(name => {
+    const fieldEl = form.querySelector(`[data-field="${name}"]`);
+    const input = fieldEl.querySelector('input, textarea');
+    input.addEventListener('blur', () => validateField(name));
+    input.addEventListener('input', () => {
+      if (fieldEl.classList.contains('has-error')) validateField(name);
+    });
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const results = Object.keys(validators).map(validateField);
+    const allValid = results.every(Boolean);
+
+    status.classList.remove('show', 'success', 'fail');
+
+    if (!allValid) {
+      status.textContent = 'Please fix the highlighted fields before sending.';
+      status.classList.add('show', 'fail');
+      const firstError = form.querySelector('.has-error input, .has-error textarea');
+      if (firstError) firstError.focus();
+      return;
+    }
+
+    // No backend wired up in this template — swap this block for a real
+    // fetch() call to your form endpoint (see README).
+    status.textContent = 'Thanks — we\'ll be in touch within one business day.';
+    status.classList.add('show', 'success');
+    form.reset();
+  });
+</script>
+
+</body>
+</html>

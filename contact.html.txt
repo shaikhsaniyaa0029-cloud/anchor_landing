@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Anchor — Contact</title>
+  <meta name="description" content="Contact Anchor and request a setup call.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #1B2430;
+      --steel: #EDEAE3;
+      --chalk: #FAF9F6;
+      --slate: #5B6472;
+      --line: #C9C3B6;
+      --orange: #E8622C;
+      --rust: #A63D22;
+      --ok: #2F6B4F;
+
+      --display: 'Fraunces', serif;
+      --body: 'IBM Plex Sans', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+
+      --maxw: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--steel);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    h1, h2 {
+      font-family: var(--display);
+      font-weight: 500;
+      line-height: 1.08;
+      margin: 0;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: auto;
+      padding: 0 28px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(237,234,227,0.94);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      text-decoration: none;
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav a:hover {
+      border-color: var(--ink);
+    }
+
+    .nav-cta,
+    .btn-primary {
+      background: var(--orange);
+      color: var(--chalk);
+      text-decoration: none;
+      padding: 12px 20px;
+      display: inline-block;
+      border-radius: 2px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-cta:hover,
+    .btn-primary:hover {
+      background: var(--rust);
+    }
+
+    .menu-btn {
+      display: none;
+      width: 42px;
+      height: 42px;
+      background: none;
+      border: 1px solid var(--ink);
+      cursor: pointer;
+    }
+
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      position: relative;
+      margin: auto;
+    }
+
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+
+    .menu-btn span::before {
+      top: -6px;
+    }
+
+    .menu-btn span::after {
+      top: 6px;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 100px 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--slate);
+      margin-bottom: 18px;
+    }
+
+    .contact-copy h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      max-width: 12ch;
+    }
+
+    .contact-copy p {
+      color: var(--slate);
+      max-width: 36ch;
+      margin-top: 24px;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 32px;
+      color: var(--slate);
+      font-family: var(--mono);
+      font-size: 0.86rem;
+    }
+
+    .contact-list li {
+      margin-bottom: 10px;
+    }
+
+    form {
+      background: var(--chalk);
+      border: 1px solid var(--line);
+      padding: 38px;
+      border-radius: 3px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 0.86rem;
+      font-weight: 500;
+    }
+
+    input,
+    textarea {
+      font-family: var(--body);
+      font-size: 0.98rem;
+      padding: 12px 14px;
+      background: var(--steel);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      color: var(--ink);
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--ink);
+    }
+
+    .field.has-error input,
+    .field.has-error textarea {
+      border-color: var(--rust);
+    }
+
+    .error-msg {
+      font-size: 0.8rem;
+      color: var(--rust);
+      display: none;
+    }
+
+    .field.has-error .error-msg {
+      display: block;
+    }
+
+    .form-status {
+      margin-top: 15px;
+      font-size: 0.92rem;
+      display: none;
+    }
+
+    .form-status.show {
+      display: block;
+    }
+
+    .form-status.success {
+      color: var(--ok);
+    }
+
+    .form-status.fail {
+      color: var(--rust);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 40px 0;
+    }
+
+    footer p {
+      color: var(--slate);
+      margin: 0;
+    }
+
+    @media (max-width: 850px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+
+      nav {
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--chalk);
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 28px 18px;
+        display: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      nav a {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .contact {
+        padding: 60px 0;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      form {
+        padding: 25px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<header>
+  <div class="wrap nav-inner">
+
+```
+<a href="index.html" class="brand">⚓ Anchor</a>
+
+<nav id="nav-links">
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="testimonials.html">Testimonials</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<a href="contact.html" class="nav-cta">Start free trial</a>
+
+<button class="menu-btn" id="menu-btn" aria-label="Open menu">
+  <span></span>
+</button>
+```
+
+  </div>
+</header>
+
+<main>
+
+  <section class="contact">
+    <div class="wrap contact-grid">
+
+```
+  <div class="contact-copy">
+
+    <p class="eyebrow">CONTACT / 03</p>
+
+    <h1>Set it up in one sitting.</h1>
+
+    <p>
+      Tell us a bit about your trade and how you invoice today.
+      We'll help you set up your first job templates.
+    </p>
+
+    <ul class="contact-list">
+      <li>hello@anchorbooks.example</li>
+      <li>Mon–Fri, 8am–6pm</li>
+      <li>Response within one business day</li>
+    </ul>
+
+  </div>
+
+  <form id="contact-form" novalidate>
+
+    <div class="form-row">
+
+      <div class="field" data-field="name">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          autocomplete="name"
+        >
+        <span class="error-msg">Enter your name.</span>
+      </div>
+
+      <div class="field" data-field="trade">
+        <label for="trade">Trade</label>
+        <input
+          type="text"
+          id="trade"
+          name="trade"
+          placeholder="Electrician, plumber, HVAC..."
+        >
+        <span class="error-msg">Let us know your trade.</span>
+      </div>
+
+    </div>
+
+    <div class="field" data-field="email">
+
+      <label for="email">Email</label>
+
+      <input
+        type="email"
+        id="email"
+        name="email"
+        autocomplete="email"
+      >
+
+      <span class="error-msg">
+        Enter a valid email address.
+      </span>
+
+    </div>
+
+    <div class="field" data-field="phone">
+
+      <label for="phone">
+        Phone
+        <span style="color:var(--slate);font-weight:400;">
+          (optional)
+        </span>
+      </label>
+
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        autocomplete="tel"
+        placeholder="(555) 555-5555"
+      >
+
+      <span class="error-msg">
+        Enter a valid phone number, or leave this blank.
+      </span>
+
+    </div>
+
+    <div class="field" data-field="message">
+
+      <label for="message">
+        How do you invoice today?
+      </label>
+
+      <textarea
+        id="message"
+        name="message"
+        rows="5"
+      ></textarea>
+
+      <span class="error-msg">
+        Tell us a little about your current setup.
+      </span>
+
+    </div>
+
+    <button type="submit" class="btn-primary">
+      Request setup call
+    </button>
+
+    <p
+      class="form-status"
+      id="form-status"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+  </form>
+
+</div>
+```
+
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>
+      &copy; 2026 Anchor Books, Inc.
+      Built for people who'd rather be on the job.
+    </p>
+  </div>
+</footer>
+
+<script>
+
+  /* Mobile menu */
+
+  const menuBtn = document.getElementById('menu-btn');
+  const navLinks = document.getElementById('nav-links');
+
+  menuBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+
+  });
+
+
+  /* Contact form validation */
+
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+
+  const validators = {
+
+    name: value =>
+      value.trim().length >= 2,
+
+    trade: value =>
+      value.trim().length >= 2,
+
+    email: value =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
+
+    phone: value =>
+      value.trim() === '' ||
+      /^[0-9+()\-.\s]{7,}$/.test(value.trim()),
+
+    message: value =>
+      value.trim().length >= 10
+
+  };
+
+
+  function setFieldError(fieldElement, hasError) {
+
+    fieldElement.classList.toggle(
+      'has-error',
+      hasError
+    );
+
+  }
+
+
+  function validateField(name) {
+
+    const fieldElement =
+      form.querySelector(`[data-field="${name}"]`);
+
+    const input =
+      fieldElement.querySelector('input, textarea');
+
+    const valid =
+      validators[name](input.value);
+
+    setFieldError(fieldElement, !valid);
+
+    return valid;
+
+  }
+
+
+  Object.keys(validators).forEach(name => {
+
+    const fieldElement =
+      form.querySelector(`[data-field="${name}"]`);
+
+    const input =
+      fieldElement.querySelector('input, textarea');
+
+    input.addEventListener('blur', () => {
+      validateField(name);
+    });
+
+    input.addEventListener('input', () => {
+
+      if (
+        fieldElement.classList.contains('has-error')
+      ) {
+        validateField(name);
+      }
+
+    });
+
+  });
+
+
+  form.addEventListener('submit', event => {
+
+    event.preventDefault();
+
+    const results =
+      Object.keys(validators).map(validateField);
+
+    const allValid =
+      results.every(Boolean);
+
+    status.classList.remove(
+      'show',
+      'success',
+      'fail'
+    );
+
+
+    if (!allValid) {
+
+      status.textContent =
+        'Please fix the highlighted fields before sending.';
+
+      status.classList.add(
+        'show',
+        'fail'
+      );
+
+      const firstError =
+        form.querySelector(
+          '.has-error input, .has-error textarea'
+        );
+
+      if (firstError) {
+        firstError.focus();
+      }
+
+      return;
+
+    }
+
+
+    status.textContent =
+      "Thanks — we'll be in touch within one business day.";
+
+    status.classList.add(
+      'show',
+      'success'
+    );
+
+    form.reset();
+
+  });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Anchor — Features</title>
+  <meta name="description" content="Explore Anchor bookkeeping features for independent tradespeople.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #1B2430;
+      --steel: #EDEAE3;
+      --chalk: #FAF9F6;
+      --slate: #5B6472;
+      --line: #C9C3B6;
+      --orange: #E8622C;
+      --rust: #A63D22;
+      --ok: #2F6B4F;
+
+      --display: 'Fraunces', serif;
+      --body: 'IBM Plex Sans', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+
+      --maxw: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--steel);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--display);
+      font-weight: 500;
+      line-height: 1.08;
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--orange);
+      outline-offset: 3px;
+    }
+
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(237,234,227,0.94);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav a:hover {
+      border-color: var(--ink);
+    }
+
+    .nav-cta,
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      background: var(--orange);
+      color: var(--chalk);
+      text-decoration: none;
+      padding: 12px 20px;
+      font-weight: 500;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-cta:hover,
+    .btn-primary:hover {
+      background: var(--rust);
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: 1px solid var(--ink);
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+    }
+
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      position: relative;
+      margin: auto;
+    }
+
+    .menu-btn span::before {
+      position: absolute;
+      top: -6px;
+    }
+
+    .menu-btn span::after {
+      position: absolute;
+      top: 6px;
+    }
+
+    /* PAGE */
+    .page-hero {
+      padding: 100px 0 80px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--slate);
+      margin-bottom: 18px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      max-width: 14ch;
+    }
+
+    .page-hero p {
+      max-width: 55ch;
+      color: var(--slate);
+      font-size: 1.08rem;
+      margin-top: 25px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .feature-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .feature {
+      display: grid;
+      grid-template-columns: 70px 1fr 1.3fr;
+      gap: 30px;
+      padding: 35px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .number {
+      font-family: var(--mono);
+      color: var(--slate);
+    }
+
+    .feature h2 {
+      font-size: 1.6rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--slate);
+      max-width: 55ch;
+    }
+
+    .cta-section {
+      background: var(--ink);
+      color: var(--chalk);
+    }
+
+    .cta-section h2 {
+      color: var(--chalk);
+      font-size: 2.2rem;
+    }
+
+    .cta-section p {
+      color: #D7D4CE;
+      max-width: 50ch;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 40px 0;
+    }
+
+    footer p {
+      color: var(--slate);
+      margin: 0;
+    }
+
+    @media (max-width: 800px) {
+      nav {
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--chalk);
+        border-bottom: 1px solid var(--line);
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 28px 18px;
+        display: none;
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      nav a {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .feature {
+        grid-template-columns: 50px 1fr;
+      }
+
+      .feature p {
+        grid-column: 2;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<header>
+  <div class="wrap nav-inner">
+
+```
+<a href="index.html" class="brand">
+  ⚓ Anchor
+</a>
+
+<nav id="nav-links">
+  <a href="index.html">Home</a>
+  <a href="features.html">Features</a>
+  <a href="testimonials.html">Testimonials</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<a href="contact.html" class="nav-cta">Start free trial</a>
+
+<button class="menu-btn" id="menu-btn" aria-label="Open menu">
+  <span></span>
+</button>
+```
+
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+
+```
+  <p class="eyebrow">FEATURES / 01</p>
+
+  <h1>Everything that used to live in a shoebox.</h1>
+
+  <p>
+    Anchor keeps invoices, expenses, mileage, job costs, and tax estimates
+    organized so independent tradespeople can spend less time on paperwork.
+  </p>
+
+</div>
+```
+
+  </section>
+
+  <section>
+    <div class="wrap">
+
+```
+  <div class="feature-list">
+
+    <article class="feature">
+      <span class="number">01</span>
+
+      <h2>Invoicing</h2>
+
+      <p>
+        Build an invoice on site from a job template, send it by text or
+        email, and keep track of when it is opened or ignored.
+      </p>
+    </article>
+
+    <article class="feature">
+      <span class="number">02</span>
+
+      <h2>Expense Capture</h2>
+
+      <p>
+        Photograph a receipt at the supply counter. Anchor organizes the
+        vendor, amount, and category against the appropriate job.
+      </p>
+    </article>
+
+    <article class="feature">
+      <span class="number">03</span>
+
+      <h2>Job Costing</h2>
+
+      <p>
+        Compare labor, parts, and mileage against what you billed so you
+        can understand which jobs are actually profitable.
+      </p>
+    </article>
+
+    <article class="feature">
+      <span class="number">04</span>
+
+      <h2>Mileage Log</h2>
+
+      <p>
+        Keep track of mileage between job sites and maintain an organized
+        record without relying on a paper notebook.
+      </p>
+    </article>
+
+    <article class="feature">
+      <span class="number">05</span>
+
+      <h2>Tax Set-Aside</h2>
+
+      <p>
+        Maintain a running estimate of what to hold back from payments
+        based on your actual job margins.
+      </p>
+    </article>
+
+  </div>
+
+</div>
+```
+
+  </section>
+
+  <section class="cta-section">
+    <div class="wrap">
+
+```
+  <h2>Ready to spend less time on paperwork?</h2>
+
+  <p>
+    Tell us about your trade and how you invoice today.
+    We'll help you set up your first job templates.
+  </p>
+
+  <a href="contact.html" class="btn-primary">
+    Request setup call
+  </a>
+
+</div>
+```
+
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; 2026 Anchor Books, Inc. Built for people who'd rather be on the job.</p>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const navLinks = document.getElementById('nav-links');
+
+  menuBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
