@@ -1,8 +1,4 @@
-# Anchor — landing page
-
-A responsive, single-page marketing site for **Anchor**, a fictional bookkeeping
-tool for independent tradespeople (electricians, plumbers, HVAC techs). Built
-as a self-contained `index.html` with embedded CSS and vanilla JavaScript —
+ontained `index.html` with embedded CSS and vanilla JavaScript —
 no build step, no framework, no dependencies beyond two Google Fonts.
 
 ## Why this approach
